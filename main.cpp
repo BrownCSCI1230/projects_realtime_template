@@ -5,8 +5,7 @@
 #include <iostream>
 #include <QSettings>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     QCoreApplication::setApplicationName("Qt Hello GL 2 Example");

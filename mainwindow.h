@@ -1,10 +1,9 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
 #include <QCheckBox>
 #include <QPushButton>
-#include "glrenderer.h"
+#include "realtime.h"
 
 class MainWindow : public QWidget
 {
@@ -17,14 +16,13 @@ public:
 private:
 
     void connectUIElements();
-    GLRenderer *glRenderer;
+    Realtime *realtime;
     QCheckBox *filter1;
     QCheckBox *filter2;
     QPushButton *uploadFile;
 
 private slots:
-    void onPerPixel();
-    void onKernelBased();
+    void onPerPixelFilter();
+    void onKernelBasedFilter();
     void onUploadFile();
 };
-#endif // MAINWINDOW_H

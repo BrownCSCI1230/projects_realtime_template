@@ -6,15 +6,14 @@
 #include <QFileDialog>
 #include <QSettings>
 
-void MainWindow::initialize()
-{
-    glRenderer = new GLRenderer;
+void MainWindow::initialize() {
+    realtime = new Realtime;
 
     QHBoxLayout *hLayout = new QHBoxLayout; // horizontal alignment
     QVBoxLayout *vLayout = new QVBoxLayout(); // vertical alignment
     vLayout->setAlignment(Qt::AlignTop);
     hLayout->addLayout(vLayout);
-    hLayout->addWidget(glRenderer, 1);
+    hLayout->addWidget(realtime, 1);
     this->setLayout(hLayout);
 
     // Create toggle for showing wireframe / normals
@@ -31,38 +30,35 @@ void MainWindow::initialize()
     uploadFile = new QPushButton();
     uploadFile->setText(QStringLiteral("Upload Scene File"));
 
+    vLayout->addWidget(uploadFile);
     vLayout->addWidget(filter1);
     vLayout->addWidget(filter2);
-    vLayout->addWidget(uploadFile);
 
     connectUIElements();
 }
 
-void MainWindow::finish()
-{
-    glRenderer->finish();
+void MainWindow::finish() {
+    realtime->finish();
+    delete(realtime);
 }
 
 void MainWindow::connectUIElements() {
-    connect(invertColors, &QCheckBox::clicked, this, &MainWindow::onInvertColors); // invert colors cb
-    connect(sharpenImage, &QCheckBox::clicked, this, &MainWindow::onSharpenImage); // sharpen image cb
+    connect(filter1, &QCheckBox::clicked, this, &MainWindow::onPerPixelFilter); // invert colors cb
+    connect(filter2, &QCheckBox::clicked, this, &MainWindow::onKernelBasedFilter); // sharpen image cb
     connect(uploadFile, &QPushButton::clicked, this, &MainWindow::onUploadFile); // upload file button
 }
 
-void MainWindow::onPerPixel()
-{
-    settings.invertColors = !settings.invertColors;
-    glRenderer->settingsChange();
+void MainWindow::onPerPixelFilter() {
+    settings.perPixelFilter = !settings.perPixelFilter;
+    realtime->settingsChange();
 }
 
-void MainWindow::onKernelBased()
-{
-    settings.sharpenImage = !settings.sharpenImage;
-    glRenderer->settingsChange();
+void MainWindow::onKernelBasedFilter() {
+    settings.kernelBasedFilter = !settings.kernelBasedFilter;
+    realtime->settingsChange();
 }
 
-void MainWindow::onUploadFile()
-{
+void MainWindow::onUploadFile() {
     // Get abs path of config file
     QString configFilePath = QFileDialog::getOpenFileName(this, tr("Upload File"), QDir::homePath(), tr("Config Files (*.ini)"));
     if (configFilePath.isNull()) { return; }
@@ -72,4 +68,5 @@ void MainWindow::onUploadFile()
     settings.sceneFilePath = qsettings.value("IO/scene").toString().toStdString();
     settings.shapeParameter1 = qsettings.value("tesselation_param_1").toInt();
     settings.shapeParameter2 = qsettings.value("tesselation_param_2").toInt();
+    realtime->sceneChange();
 }

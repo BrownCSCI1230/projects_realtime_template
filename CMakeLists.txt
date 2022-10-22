@@ -21,14 +21,16 @@ find_package(Qt6 COMPONENTS Xml           REQUIRED)
 # Specifies .cpp and .h files to be passed to the compiler
 add_executable(${PROJECT_NAME}
 main.cpp 
-glrenderer.h glrenderer.cpp 
+realtime.h realtime.cpp
 mainwindow.h mainwindow.cpp 
+settings.cpp
 
 
-Parsing/SceneData.h
-Parsing/ScenefileReader.h Parsing/ScenefileReader.cpp
-Parsing/SceneParser.h Parsing/SceneParser.cpp
-ShaderLoading/shaderloader.h
+utils/SceneData.h
+utils/ScenefileReader.h utils/ScenefileReader.cpp
+utils/SceneParser.h utils/SceneParser.cpp
+utils/shaderloader.h
+settings.h
 
 Resources/Shaders/default.frag
 Resources/Shaders/default.vert
