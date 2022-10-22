@@ -3,8 +3,8 @@
 #include <QCoreApplication>
 #include <QMouseEvent>
 #include <QKeyEvent>
-#include "settings.h"
 #include <iostream>
+#include "settings.h"
 
 Realtime::Realtime(QWidget *parent)
     : QOpenGLWidget(parent)

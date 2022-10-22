@@ -20,20 +20,24 @@ find_package(Qt6 COMPONENTS Xml           REQUIRED)
 
 # Specifies .cpp and .h files to be passed to the compiler
 add_executable(${PROJECT_NAME}
-main.cpp 
-realtime.h realtime.cpp
-mainwindow.h mainwindow.cpp 
-settings.cpp
+    main.cpp
 
+    realtime.cpp
+    mainwindow.cpp
+    settings.cpp
+    utils/scenefilereader.cpp
+    utils/sceneparser.cpp
 
-utils/SceneData.h
-utils/ScenefileReader.h utils/ScenefileReader.cpp
-utils/SceneParser.h utils/SceneParser.cpp
-utils/shaderloader.h
-settings.h
+    mainwindow.h
+    realtime.h
+    settings.h
+    utils/scenedata.h
+    utils/scenefilereader.h
+    utils/sceneparser.h
+    utils/shaderloader.h
 
-Resources/Shaders/default.frag
-Resources/Shaders/default.vert
+    Resources/Shaders/default.frag
+    Resources/Shaders/default.vert
 )
 
 # GLEW: this creates its library and allows you to `#include "GL/glew.h"`
@@ -43,14 +47,14 @@ add_subdirectory(glm)
 
 # Specifies libraries to be linked (Qt components, glew, etc)
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  Qt::Core
-  Qt::Gui
-  Qt::OpenGL
-  Qt::OpenGLWidgets
-  Qt::Gui
-  Qt::Xml
-  StaticGLEW
-  glm
+    Qt::Core
+    Qt::Gui
+    Qt::OpenGL
+    Qt::OpenGLWidgets
+    Qt::Gui
+    Qt::Xml
+    StaticGLEW
+    glm
 )
 
 # GLEW: this provides support for Windows (including 64-bit)
