@@ -3,7 +3,6 @@
 #include <QCoreApplication>
 #include <QMouseEvent>
 #include <QKeyEvent>
-#include <iostream>
 #include "settings.h"
 
 Realtime::Realtime(QWidget *parent)
