@@ -1,6 +1,3 @@
-#ifndef SHADERLOADER_H
-#define SHADERLOADER_H
-
 #pragma once
 
 // Defined before including GLEW to suppress deprecation messages on macOS
@@ -78,12 +75,10 @@ private:
             std::string log(length, '\0');
             glGetShaderInfoLog(shaderID, length, nullptr, &log[0]);
 
-            glDeleteProgram(shaderID);
+            glDeleteShader(shaderID);
             throw std::runtime_error(log);
         }
 
         return shaderID;
     }
 };
-
-#endif // SHADERLOADER_H
