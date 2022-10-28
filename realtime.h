@@ -18,8 +18,8 @@ class Realtime : public QOpenGLWidget
 public:
     Realtime(QWidget *parent = nullptr);
     void finish();                                      // Called on program exit
-    void sceneChange();
-    void settingsChange();
+    void sceneChanged();
+    void settingsChanged();
 
 public slots:
     void tick(QTimerEvent* event);                      // Called once per tick of m_timer

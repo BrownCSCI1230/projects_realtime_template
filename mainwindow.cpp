@@ -214,25 +214,21 @@ void MainWindow::connectFar() {
 
 void MainWindow::onPerPixelFilter() {
     settings.perPixelFilter = !settings.perPixelFilter;
-    realtime->settingsChange();
+    realtime->settingsChanged();
 }
 
 void MainWindow::onKernelBasedFilter() {
     settings.kernelBasedFilter = !settings.kernelBasedFilter;
-    realtime->settingsChange();
+    realtime->settingsChanged();
 }
 
 void MainWindow::onUploadFile() {
-    // Get abs path of config file
-    QString configFilePath = QFileDialog::getOpenFileName(this, tr("Upload File"), QDir::homePath(), tr("Config Files (*.ini)"));
+    // Get abs path of scene file
+    QString configFilePath = QFileDialog::getOpenFileName(this, tr("Upload File"), QDir::homePath(), tr("Scene Files (*.xml)"));
     if (configFilePath.isNull()) { return; }
 
-    // Parse .ini config file
-    QSettings qsettings(configFilePath, QSettings::IniFormat);
-    settings.sceneFilePath = qsettings.value("IO/scene").toString().toStdString();
-    settings.shapeParameter1 = qsettings.value("tesselation_param_1").toInt();
-    settings.shapeParameter2 = qsettings.value("tesselation_param_2").toInt();
-    realtime->sceneChange();
+    settings.sceneFilePath = configFilePath.toStdString();
+    realtime->sceneChanged();
 }
 
 
@@ -240,40 +236,40 @@ void MainWindow::onValChangeP1(int newValue) {
     p1Slider->setValue(newValue);
     p1Box->setValue(newValue);
     settings.shapeParameter1 = p1Slider->value();
-    realtime->settingsChange();
+    realtime->settingsChanged();
 }
 
 void MainWindow::onValChangeP2(int newValue) {
     p2Slider->setValue(newValue);
     p2Box->setValue(newValue);
     settings.shapeParameter2 = p2Slider->value();
-    realtime->settingsChange();
+    realtime->settingsChanged();
 }
 
 void MainWindow::onValChangeNearSlider(int newValue) {
     nearSlider->setValue(newValue);
     nearBox->setValue(newValue/100.f);
     settings.nearPlane = nearBox->value();
-    realtime->settingsChange();
+    realtime->settingsChanged();
 }
 
 void MainWindow::onValChangeFarSlider(int newValue) {
     farSlider->setValue(newValue);
     farBox->setValue(newValue/100.f);
     settings.farPlane = farBox->value();
-    realtime->settingsChange();
+    realtime->settingsChanged();
 }
 
 void MainWindow::onValChangeNearBox(double newValue) {
     nearSlider->setValue(int(newValue*100.f));
     nearBox->setValue(newValue);
     settings.nearPlane = nearBox->value();
-    realtime->settingsChange();
+    realtime->settingsChanged();
 }
 
 void MainWindow::onValChangeFarBox(double newValue) {
     farSlider->setValue(int(newValue*100.f));
     farBox->setValue(newValue);
     settings.farPlane = farBox->value();
-    realtime->settingsChange();
+    realtime->settingsChanged();
 }

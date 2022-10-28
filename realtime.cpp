@@ -52,12 +52,12 @@ void Realtime::resizeGL(int w, int h) {
 
 }
 
-void Realtime::sceneChange() {
+void Realtime::sceneChanged() {
 
     update(); // Asks for a PaintGL() call to occur
 }
 
-void Realtime::settingsChange() {
+void Realtime::settingsChanged() {
     update(); // Asks for a PaintGL() call to occur
 }
 
