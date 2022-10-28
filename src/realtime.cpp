@@ -70,20 +70,20 @@ void Realtime::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void Realtime::mousePressEvent(QMouseEvent *event) {
-    if(event->buttons().testFlag(Qt::LeftButton)){
+    if (event->buttons().testFlag(Qt::LeftButton)) {
         m_mouseDown = true;
         m_prev_mouse_pos = glm::vec2(event->position().x(), event->position().y());
     }
 }
 
 void Realtime::mouseReleaseEvent(QMouseEvent *event) {
-    if(!event->buttons().testFlag(Qt::LeftButton)){
+    if (!event->buttons().testFlag(Qt::LeftButton)) {
         m_mouseDown = false;
     }
 }
 
 void Realtime::mouseMoveEvent(QMouseEvent *event) {
-    if(m_mouseDown){
+    if (m_mouseDown) {
         int posX = event->position().x();
         int posY = event->position().y();
         int deltaX = posX - m_prev_mouse_pos.x;

@@ -225,9 +225,15 @@ void MainWindow::onKernelBasedFilter() {
 void MainWindow::onUploadFile() {
     // Get abs path of scene file
     QString configFilePath = QFileDialog::getOpenFileName(this, tr("Upload File"), QDir::homePath(), tr("Scene Files (*.xml)"));
-    if (configFilePath.isNull()) { return; }
+    if (configFilePath.isNull()) {
+        std::cout << "Failed to load null scenefile." << std::endl;
+        return;
+    }
 
     settings.sceneFilePath = configFilePath.toStdString();
+
+    std::cout << "Loaded scenefile: \"" << configFilePath.toStdString() << "\"." << std::endl;
+
     realtime->sceneChanged();
 }
 

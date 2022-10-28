@@ -8,8 +8,8 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    QCoreApplication::setApplicationName("Qt Hello GL 2 Example");
-    QCoreApplication::setOrganizationName("QtProject");
+    QCoreApplication::setApplicationName("Projects 5 & 6: Lights, Camera & Action!");
+    QCoreApplication::setOrganizationName("CS 1230");
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
 
     QSurfaceFormat fmt;
