@@ -18,7 +18,8 @@
 
 // Students, please ignore this file.
 
-ScenefileReader::ScenefileReader(const std::string& name) {
+ScenefileReader::ScenefileReader(const std::string& name)
+{
    file_name = name;
 
    memset(&m_cameraData, 0, sizeof(SceneCameraData));
@@ -28,7 +29,8 @@ ScenefileReader::ScenefileReader(const std::string& name) {
    m_nodes.clear();
 }
 
-ScenefileReader::~ScenefileReader() {
+ScenefileReader::~ScenefileReader()
+{
    std::vector<SceneLightData*>::iterator lights;
    for (lights = m_lights.begin(); lights != m_lights.end(); lights++) {
        delete *lights;
