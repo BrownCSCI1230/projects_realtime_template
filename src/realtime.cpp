@@ -32,6 +32,8 @@ void Realtime::finish() {
     // Students: anything requiring OpenGL calls when the program exits should be done here
 
     doneCurrent();
+
+    std::cout << "Finished" << std::endl;
 }
 
 void Realtime::initializeGL() {
@@ -47,7 +49,7 @@ void Realtime::initializeGL() {
     if (err != GLEW_OK) {
         std::cerr << "Error while initializing GL: " << glewGetErrorString(err) << std::endl;
     }
-    std::cout << "Initialized GL: " << glewGetString(GLEW_VERSION) << std::endl;
+    std::cout << "Initialized GL: Version " << glewGetString(GLEW_VERSION) << std::endl;
 
     // Students: anything requiring OpenGL calls when the program starts should be done here
 }

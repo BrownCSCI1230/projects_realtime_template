@@ -40,9 +40,6 @@ add_executable(${PROJECT_NAME}
     src/utils/scenefilereader.h
     src/utils/sceneparser.h
     src/utils/shaderloader.h
-
-    resources/shaders/default.frag
-    resources/shaders/default.vert
 )
 
 # GLM: this creates its library and allows you to `#include "glm/..."`
@@ -60,6 +57,15 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt::OpenGLWidgets
     Qt::Xml
     StaticGLEW
+)
+
+# Specifies other files
+qt6_add_resources(${PROJECT_NAME} "Resources"
+    PREFIX
+        "/"
+    FILES
+        resources/shaders/default.frag
+        resources/shaders/default.vert
 )
 
 # GLEW: this provides support for Windows (including 64-bit)
