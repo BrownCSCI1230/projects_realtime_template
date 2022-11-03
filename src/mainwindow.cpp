@@ -105,26 +105,26 @@ void MainWindow::initialize() {
     nearSlider = new QSlider(Qt::Orientation::Horizontal); // Near plane slider
     nearSlider->setTickInterval(1);
     nearSlider->setMinimum(1);
-    nearSlider->setMaximum(500);
+    nearSlider->setMaximum(1000);
     nearSlider->setValue(10);
 
     nearBox = new QDoubleSpinBox();
     nearBox->setMinimum(0.01f);
-    nearBox->setMaximum(5.f);
+    nearBox->setMaximum(10.f);
     nearBox->setSingleStep(0.1f);
     nearBox->setValue(0.1f);
 
     farSlider = new QSlider(Qt::Orientation::Horizontal); // Far plane slider
     farSlider->setTickInterval(1);
-    farSlider->setMinimum(500);
-    farSlider->setMaximum(5000);
-    farSlider->setValue(1000);
+    farSlider->setMinimum(1000);
+    farSlider->setMaximum(10000);
+    farSlider->setValue(10000);
 
     farBox = new QDoubleSpinBox();
-    farBox->setMinimum(5.f);
-    farBox->setMaximum(50.f);
-    farBox->setSingleStep(0.01f);
-    farBox->setValue(10.f);
+    farBox->setMinimum(10.f);
+    farBox->setMaximum(100.f);
+    farBox->setSingleStep(0.1f);
+    farBox->setValue(100.f);
 
     // Adds the slider and number box to the parameter layouts
     lnear->addWidget(nearSlider);

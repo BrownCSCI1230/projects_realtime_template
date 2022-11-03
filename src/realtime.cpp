@@ -27,11 +27,11 @@ Realtime::Realtime(QWidget *parent)
 
 void Realtime::finish() {
     killTimer(m_timer);
-    makeCurrent();
+    this->makeCurrent();
 
     // Students: anything requiring OpenGL calls when the program exits should be done here
 
-    doneCurrent();
+    this->doneCurrent();
 
     std::cout << "Finished" << std::endl;
 }
@@ -43,13 +43,16 @@ void Realtime::initializeGL() {
     m_elapsedTimer.start();
 
     // Initializing GL.
-    // GLEW (GL Extension Wrangler) provides implementations of OpenGL functions.
+    // GLEW (GL Extension Wrangler) provides access to OpenGL functions.
     glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if (err != GLEW_OK) {
         std::cerr << "Error while initializing GL: " << glewGetErrorString(err) << std::endl;
     }
     std::cout << "Initialized GL: Version " << glewGetString(GLEW_VERSION) << std::endl;
+
+    // Tells OpenGL how big the screen is
+    glViewport(0, 0, size().width() * m_devicePixelRatio, size().height() * m_devicePixelRatio);
 
     // Students: anything requiring OpenGL calls when the program starts should be done here
 }
@@ -59,6 +62,9 @@ void Realtime::paintGL() {
 }
 
 void Realtime::resizeGL(int w, int h) {
+    // Tells OpenGL how big the screen is
+    glViewport(0, 0, size().width() * m_devicePixelRatio, size().height() * m_devicePixelRatio);
+
     // Students: anything requiring OpenGL calls when the program starts should be done here
 }
 
