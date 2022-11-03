@@ -17,7 +17,6 @@ public:
     void finish();
 
 private:
-
     void connectUIElements();
     void connectParam1();
     void connectParam2();
@@ -26,6 +25,7 @@ private:
     void connectPerPixelFilter();
     void connectKernelBasedFilter();
     void connectUploadFile();
+    void connectExtraCredit();
 
     Realtime *realtime;
     QCheckBox *filter1;
@@ -40,6 +40,12 @@ private:
     QDoubleSpinBox *nearBox;
     QDoubleSpinBox *farBox;
 
+    // Extra Credit:
+    QCheckBox *ec1;
+    QCheckBox *ec2;
+    QCheckBox *ec3;
+    QCheckBox *ec4;
+
 private slots:
     void onPerPixelFilter();
     void onKernelBasedFilter();
@@ -50,4 +56,10 @@ private slots:
     void onValChangeFarSlider(int newValue);
     void onValChangeNearBox(double newValue);
     void onValChangeFarBox(double newValue);
+
+    // Extra Credit:
+    void onExtraCredit1();
+    void onExtraCredit2();
+    void onExtraCredit3();
+    void onExtraCredit4();
 };

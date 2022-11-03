@@ -32,8 +32,6 @@ void Realtime::finish() {
     // Students: anything requiring OpenGL calls when the program exits should be done here
 
     this->doneCurrent();
-
-    std::cout << "Finished" << std::endl;
 }
 
 void Realtime::initializeGL() {
@@ -51,6 +49,8 @@ void Realtime::initializeGL() {
     }
     std::cout << "Initialized GL: Version " << glewGetString(GLEW_VERSION) << std::endl;
 
+    // Allows OpenGL to draw objects appropriately on top of one another
+    glEnable(GL_DEPTH_TEST);
     // Tells OpenGL how big the screen is
     glViewport(0, 0, size().width() * m_devicePixelRatio, size().height() * m_devicePixelRatio);
 
