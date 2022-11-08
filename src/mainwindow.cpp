@@ -289,14 +289,14 @@ void MainWindow::onValChangeP2(int newValue) {
 }
 
 void MainWindow::onValChangeNearSlider(int newValue) {
-    nearSlider->setValue(newValue);
+    //nearSlider->setValue(newValue);
     nearBox->setValue(newValue/100.f);
     settings.nearPlane = nearBox->value();
     realtime->settingsChanged();
 }
 
 void MainWindow::onValChangeFarSlider(int newValue) {
-    farSlider->setValue(newValue);
+    //farSlider->setValue(newValue);
     farBox->setValue(newValue/100.f);
     settings.farPlane = farBox->value();
     realtime->settingsChanged();
@@ -304,14 +304,14 @@ void MainWindow::onValChangeFarSlider(int newValue) {
 
 void MainWindow::onValChangeNearBox(double newValue) {
     nearSlider->setValue(int(newValue*100.f));
-    nearBox->setValue(newValue);
+    //nearBox->setValue(newValue);
     settings.nearPlane = nearBox->value();
     realtime->settingsChanged();
 }
 
 void MainWindow::onValChangeFarBox(double newValue) {
     farSlider->setValue(int(newValue*100.f));
-    farBox->setValue(newValue);
+    //farBox->setValue(newValue);
     settings.farPlane = farBox->value();
     realtime->settingsChanged();
 }
