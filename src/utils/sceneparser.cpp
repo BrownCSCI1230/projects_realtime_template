@@ -12,6 +12,7 @@ bool SceneParser::parse(std::string filepath, RenderData &renderData) {
         return false;
     }
 
-    // TODO: Add your lab 5 code here to parse the scene
+    // TODO: Use your Lab 5 code here
+
     return true;
 }
