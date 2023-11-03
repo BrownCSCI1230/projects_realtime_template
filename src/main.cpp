@@ -20,14 +20,7 @@ int main(int argc, char *argv[]) {
     MainWindow w;
     w.initialize();
     w.resize(800, 600);
-    int desktopArea = QGuiApplication::primaryScreen()->size().width() *
-                      QGuiApplication::primaryScreen()->size().height();
-    int widgetArea = w.width() * w.height();
-    if (((float)widgetArea / (float)desktopArea) < 0.75f) {
-        w.show();
-    } else {
-        w.showMaximized();
-    }
+    w.show();
 
     int return_val = a.exec();
     w.finish();

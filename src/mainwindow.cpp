@@ -11,12 +11,13 @@
 
 void MainWindow::initialize() {
     realtime = new Realtime;
-
+    aspectRatioWidget = new AspectRatioWidget(this);
+    aspectRatioWidget->setAspectWidget(realtime, 3.f/4.f);
     QHBoxLayout *hLayout = new QHBoxLayout; // horizontal alignment
     QVBoxLayout *vLayout = new QVBoxLayout(); // vertical alignment
     vLayout->setAlignment(Qt::AlignTop);
     hLayout->addLayout(vLayout);
-    hLayout->addWidget(realtime, 1);
+    hLayout->addWidget(aspectRatioWidget, 1);
     this->setLayout(hLayout);
 
     // Create labels in sidebox
@@ -59,6 +60,9 @@ void MainWindow::initialize() {
     // Create file uploader for scene file
     uploadFile = new QPushButton();
     uploadFile->setText(QStringLiteral("Upload Scene File"));
+    
+    saveImage = new QPushButton();
+    saveImage->setText(QStringLiteral("Save image"));
 
     // Creates the boxes containing the parameter sliders and number boxes
     QGroupBox *p1Layout = new QGroupBox(); // horizonal slider 1 alignment
@@ -158,6 +162,7 @@ void MainWindow::initialize() {
     ec4->setChecked(false);
 
     vLayout->addWidget(uploadFile);
+    vLayout->addWidget(saveImage);
     vLayout->addWidget(tesselation_label);
     vLayout->addWidget(param1_label);
     vLayout->addWidget(p1Layout);
@@ -198,6 +203,7 @@ void MainWindow::connectUIElements() {
     connectPerPixelFilter();
     connectKernelBasedFilter();
     connectUploadFile();
+    connectSaveImage();
     connectParam1();
     connectParam2();
     connectNear();
@@ -215,6 +221,10 @@ void MainWindow::connectKernelBasedFilter() {
 
 void MainWindow::connectUploadFile() {
     connect(uploadFile, &QPushButton::clicked, this, &MainWindow::onUploadFile);
+}
+
+void MainWindow::connectSaveImage() {
+    connect(saveImage, &QPushButton::clicked, this, &MainWindow::onSaveImage);
 }
 
 void MainWindow::connectParam1() {
@@ -260,7 +270,14 @@ void MainWindow::onKernelBasedFilter() {
 
 void MainWindow::onUploadFile() {
     // Get abs path of scene file
-    QString configFilePath = QFileDialog::getOpenFileName(this, tr("Upload File"), QDir::homePath(), tr("Scene Files (*.json)"));
+    QString configFilePath = QFileDialog::getOpenFileName(this, tr("Upload File"),
+                                                          QDir::currentPath()
+                                                              .append(QDir::separator())
+                                                              .append("scenefiles")
+                                                              .append(QDir::separator())
+                                                              .append("lights-camera")
+                                                              .append(QDir::separator())
+                                                              .append("required"), tr("Scene Files (*.json)"));
     if (configFilePath.isNull()) {
         std::cout << "Failed to load null scenefile." << std::endl;
         return;
@@ -273,6 +290,26 @@ void MainWindow::onUploadFile() {
     realtime->sceneChanged();
 }
 
+void MainWindow::onSaveImage() {
+    if (settings.sceneFilePath.empty()) {
+        std::cout << "No scene file loaded." << std::endl;
+        return;
+    }
+    std::string sceneName = settings.sceneFilePath.substr(0, settings.sceneFilePath.find_last_of("."));
+    sceneName = sceneName.substr(sceneName.find_last_of("/")+1);
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save Image"),
+                                                    QDir::currentPath()
+                                                        .append(QDir::separator())
+                                                        .append("student_outputs")
+                                                        .append(QDir::separator())
+                                                        .append("lights-camera")
+                                                        .append(QDir::separator())
+                                                        .append("required")
+                                                        .append(QDir::separator())
+                                                        .append(sceneName), tr("Image Files (*.png)"));
+    std::cout << "Saving image to: \"" << filePath.toStdString() << "\"." << std::endl;
+    realtime->saveViewportImage(filePath.toStdString());
+}
 
 void MainWindow::onValChangeP1(int newValue) {
     p1Slider->setValue(newValue);

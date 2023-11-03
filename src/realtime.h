@@ -20,6 +20,7 @@ public:
     void finish();                                      // Called on program exit
     void sceneChanged();
     void settingsChanged();
+    void saveViewportImage(std::string filePath);
 
 public slots:
     void tick(QTimerEvent* event);                      // Called once per tick of m_timer

@@ -7,6 +7,7 @@
 #include <QDoubleSpinBox>
 #include <QPushButton>
 #include "realtime.h"
+#include "utils/aspectratiowidget/aspectratiowidget.hpp"
 
 class MainWindow : public QWidget
 {
@@ -25,12 +26,15 @@ private:
     void connectPerPixelFilter();
     void connectKernelBasedFilter();
     void connectUploadFile();
+    void connectSaveImage();
     void connectExtraCredit();
 
     Realtime *realtime;
+    AspectRatioWidget *aspectRatioWidget;
     QCheckBox *filter1;
     QCheckBox *filter2;
     QPushButton *uploadFile;
+    QPushButton *saveImage;
     QSlider *p1Slider;
     QSlider *p2Slider;
     QSpinBox *p1Box;
@@ -50,6 +54,7 @@ private slots:
     void onPerPixelFilter();
     void onKernelBasedFilter();
     void onUploadFile();
+    void onSaveImage();
     void onValChangeP1(int newValue);
     void onValChangeP2(int newValue);
     void onValChangeNearSlider(int newValue);

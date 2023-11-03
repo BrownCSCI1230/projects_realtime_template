@@ -40,6 +40,7 @@ add_executable(${PROJECT_NAME}
     src/utils/scenefilereader.h
     src/utils/sceneparser.h
     src/utils/shaderloader.h
+    src/utils/aspectratiowidget/aspectratiowidget.hpp
 )
 
 # GLM: this creates its library and allows you to `#include "glm/..."`
