@@ -79,6 +79,8 @@ _Instructions:_ Load `chess.json`. For about 1 second each in this order, press:
 
 #### Expected Output
 
+https://github.com/BrownCSCI1230/projects_realtime_template/assets/45575415/710ff8b4-6db4-445b-811d-f6c838741e67
+
 #### Your Output
 
 <!---
@@ -90,6 +92,8 @@ Paste your output on top of this comment!
 _Instructions:_ Load `chess.json`. Take a look around!
 
 #### Expected Output
+
+https://github.com/BrownCSCI1230/projects_realtime_template/assets/45575415/a14f4d32-88ee-4f5f-9843-74dd5c89b9dd
 
 #### Your Output
 
