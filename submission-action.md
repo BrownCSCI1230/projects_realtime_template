@@ -9,7 +9,7 @@ Please fill this out for Action! only. The project handout can be found [here](h
 >
 > 1. Set your working directory to the project directory
 > 2. From the project directory, run `git submodule update --recursive --remote` to update the `scenefiles` submodule.
-> 3. Change all instances of `"action"` in `mainwindow.cpp` to `"action"` (there should be 2 instances, one in `MainWindow::onUploadFile` and one in `MainWindow::onSaveImage`).
+> 3. Change all instances of `"lights-camera"` in `mainwindow.cpp` to `"action"` (there should be 2 instances, one in `MainWindow::onUploadFile` and one in `MainWindow::onSaveImage`).
 
 Run the program, open the specified `.json` file and follow the instructions to set the parameters.
 
