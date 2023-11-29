@@ -178,3 +178,5 @@ Thumbs.db
 *.exe
 
 build
+
+.idea
