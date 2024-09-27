@@ -4,12 +4,14 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <iostream>
+
 #include "settings.h"
+#include "utils/shaderloader.h"
 
 // ================== Project 5: Lights, Camera
 
 Realtime::Realtime(QWidget *parent)
-    : QOpenGLWidget(parent)
+    : QOpenGLWidget(parent), gl_initializer()
 {
     m_prev_mouse_pos = glm::vec2(size().width()/2, size().height()/2);
     setMouseTracking(true);
@@ -34,33 +36,62 @@ void Realtime::finish() {
     this->doneCurrent();
 }
 
+void Realtime::createFullScreenQuad() {
+    static const std::vector<GLfloat> fullscreen_quad_data =
+    {   // x, y, z, u, v    //
+        -1.0f,  1.0f, 0.0f,
+        0.0f,  1.0f,
+        -1.0f, -1.0f, 0.0f,
+        0.0f,  0.0f,
+        1.0f, -1.0f, 0.0f,
+        1.0f,  0.0f,
+        1.0f, -1.0f, 0.0f,
+        1.0f,  0.0f,
+        1.0f,  1.0f, 0.0f,
+        1.0f,  1.0f,
+        -1.0f,  1.0f, 0.0f,
+        0.0f,  1.0f
+    };
+
+    m_quad_vbo.setData(fullscreen_quad_data);
+    m_quad_vao.setData(m_quad_vbo, VAOAttrib::POS | VAOAttrib::UV);
+}
+
+void Realtime::createShaders() {
+    GLuint default_shader = ShaderLoader::createShaderProgram("::/resources/shaders/default.vert", ":/resources/shaders/default.frag");
+    m_phong_shader.initialize(default_shader);
+}
+
 void Realtime::initializeGL() {
     m_devicePixelRatio = this->devicePixelRatio();
 
     m_timer = startTimer(1000/60);
     m_elapsedTimer.start();
 
-    // Initializing GL.
-    // GLEW (GL Extension Wrangler) provides access to OpenGL functions.
-    glewExperimental = GL_TRUE;
-    GLenum err = glewInit();
-    if (err != GLEW_OK) {
-        std::cerr << "Error while initializing GL: " << glewGetErrorString(err) << std::endl;
-    }
-    std::cout << "Initialized GL: Version " << glewGetString(GLEW_VERSION) << std::endl;
-
     // Allows OpenGL to draw objects appropriately on top of one another
     glEnable(GL_DEPTH_TEST);
     // Tells OpenGL to only draw the front face
     glEnable(GL_CULL_FACE);
     // Tells OpenGL how big the screen is
-    glViewport(0, 0, size().width() * m_devicePixelRatio, size().height() * m_devicePixelRatio);
+    m_screen_width  = int32_t(size().width()  * m_devicePixelRatio);
+    m_screen_height = int32_t(size().height() * m_devicePixelRatio);
+    glViewport(0, 0, m_screen_width, m_screen_height);
 
     // Students: anything requiring OpenGL calls when the program starts should be done here
+
+    createFullScreenQuad();
+    createShaders();
 }
 
 void Realtime::paintGL() {
     // Students: anything requiring OpenGL calls every frame should be done here
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    m_phong_shader.bind();
+    m_quad_vao.draw();
+    m_phong_shader.unbind();
+
+
 }
 
 void Realtime::resizeGL(int w, int h) {

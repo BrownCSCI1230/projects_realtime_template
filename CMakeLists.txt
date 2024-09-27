@@ -41,6 +41,12 @@ add_executable(${PROJECT_NAME}
     src/utils/sceneparser.h
     src/utils/shaderloader.h
     src/utils/aspectratiowidget/aspectratiowidget.hpp
+    src/glwrappers/fbo.cpp src/glwrappers/fbo.h src/glwrappers/rbo.cpp src/glwrappers/rbo.h src/glwrappers/shader.cpp src/glwrappers/shader.h src/glwrappers/texture.cpp src/glwrappers/texture.h src/glwrappers/vao.cpp src/glwrappers/vao.h src/glwrappers/vbo.cpp src/glwrappers/vbo.h
+    src/shapes/cone.cpp src/shapes/cone.h src/shapes/cube.cpp src/shapes/cube.h src/shapes/cylinder.cpp src/shapes/cylinder.h src/shapes/openglshape.cpp src/shapes/openglshape.h src/shapes/sphere.cpp src/shapes/sphere.h
+    src/camera.cpp src/camera.h
+    src/utils/debug.h
+    src/glwrappers/glinitializer.h src/glwrappers/glinitializer.cpp
+    gl-realtime.h gl-realtime.cpp
 )
 
 # GLM: this creates its library and allows you to `#include "glm/..."`

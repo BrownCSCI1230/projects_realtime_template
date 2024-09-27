@@ -1,3 +1,8 @@
+Latest findings:
+In QT, you're not allowed to do any GL calls before initializeGL, so my RAII scheme is moot
+The way I would be able to get around it is by... INDIRECTION!
+This class is the answer. And realtime.h needs to hold a unique_ptr to an instance of this class
+
 #pragma once
 
 // Defined before including GLEW to suppress deprecation messages on macOS
@@ -19,31 +24,28 @@
 #include "glwrappers/shader.h"
 #include "glwrappers/glinitializer.h"
 
-class Realtime : public QOpenGLWidget
+class GLRealtime
 {
-    GLInitializer gl_initializer;
 public:
-    Realtime(QWidget *parent = nullptr);
-    void finish();                                      // Called on program exit
+    GlRealtime();
+    ~GlRealtime();                                      // Called on program exit
     void sceneChanged();
     void settingsChanged();
     void saveViewportImage(std::string filePath);
 
-public slots:
     void tick(QTimerEvent* event);                      // Called once per tick of m_timer
 
-protected:
-    void initializeGL() override;                       // Called once at the start of the program
-    void paintGL() override;                            // Called whenever the OpenGL context changes or by an update() request
-    void resizeGL(int width, int height) override;      // Called when window size changes
+    void initializeGL();                       // Called once at the start of the program
+    void paintGL();                            // Called whenever the OpenGL context changes or by an update() request
+    void resizeGL(int width, int height);      // Called when window size changes
 
 private:
-    void keyPressEvent(QKeyEvent *event) override;
-    void keyReleaseEvent(QKeyEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void timerEvent(QTimerEvent *event) override;
+    // void keyPressEvent(QKeyEvent *event);
+    // void keyReleaseEvent(QKeyEvent *event);
+    // void mousePressEvent(QMouseEvent *event);
+    // void mouseReleaseEvent(QMouseEvent *event);
+    // void mouseMoveEvent(QMouseEvent *event);
+    // void timerEvent(QTimerEvent *event);
 
     // Tick Related Variables
     int m_timer;                                        // Stores timer which attempts to run ~60 times per second
@@ -70,3 +72,6 @@ private:
     void createShaders();
 
 };
+
+
+#endif // GL-REALTIME_H

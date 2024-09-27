@@ -9,6 +9,8 @@
 #include <QTextStream>
 #include <iostream>
 
+#include "utils/debug.h"
+
 class ShaderLoader{
 public:
     static GLuint createShaderProgram(const char * vertex_file_path, const char * fragment_file_path){
@@ -78,7 +80,7 @@ private:
             glDeleteShader(shaderID);
             throw std::runtime_error(log);
         }
-
+        glErrorCheck();
         return shaderID;
     }
 };

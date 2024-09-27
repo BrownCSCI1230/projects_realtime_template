@@ -411,7 +411,7 @@ bool ScenefileReader::parseCameraData(const QJsonObject &cameradata) {
         m_cameraData.pos.x = position[0].toDouble();
         m_cameraData.pos.y = position[1].toDouble();
         m_cameraData.pos.z = position[2].toDouble();
-        m_cameraData.pos.w = 1.f;
+        m_cameraData.pos.w = 1.0;
     }
     else {
         std::cout << "cameraData position must be an array" << std::endl;
@@ -431,7 +431,7 @@ bool ScenefileReader::parseCameraData(const QJsonObject &cameradata) {
         m_cameraData.up.x = up[0].toDouble();
         m_cameraData.up.y = up[1].toDouble();
         m_cameraData.up.z = up[2].toDouble();
-        m_cameraData.up.w = 0.f;
+        m_cameraData.up.w = 0.0;
     }
     else {
         std::cout << "cameraData up must be an array" << std::endl;
@@ -482,7 +482,7 @@ bool ScenefileReader::parseCameraData(const QJsonObject &cameradata) {
             m_cameraData.look.x = look[0].toDouble();
             m_cameraData.look.y = look[1].toDouble();
             m_cameraData.look.z = look[2].toDouble();
-            m_cameraData.look.w = 0.f;
+            m_cameraData.look.w = 0.0;
         }
         else {
             std::cout << "cameraData look must be an array" << std::endl;
@@ -503,7 +503,7 @@ bool ScenefileReader::parseCameraData(const QJsonObject &cameradata) {
             m_cameraData.look.x = focus[0].toDouble();
             m_cameraData.look.y = focus[1].toDouble();
             m_cameraData.look.z = focus[2].toDouble();
-            m_cameraData.look.w = 1.f;
+            m_cameraData.look.w = 1.0;
         }
         else {
             std::cout << "cameraData focus must be an array" << std::endl;
