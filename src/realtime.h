@@ -13,15 +13,10 @@
 #include <QTime>
 #include <QTimer>
 
-#include "glwrappers/fbo.h"
-#include "glwrappers/vao.h"
-#include "glwrappers/vbo.h"
-#include "glwrappers/shader.h"
-#include "glwrappers/glinitializer.h"
+#include "gl-realtime.h"
 
 class Realtime : public QOpenGLWidget
 {
-    GLInitializer gl_initializer;
 public:
     Realtime(QWidget *parent = nullptr);
     void finish();                                      // Called on program exit
@@ -61,12 +56,5 @@ private:
     int32_t m_screen_height;
 
 
-    VBO m_quad_vbo;
-    VAO m_quad_vao;
-
-    Shader m_phong_shader;
-
-    void createFullScreenQuad();
-    void createShaders();
-
+    std::unique_ptr<GlRealtime> m_gl_realtime;
 };

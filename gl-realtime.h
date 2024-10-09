@@ -1,8 +1,3 @@
-Latest findings:
-In QT, you're not allowed to do any GL calls before initializeGL, so my RAII scheme is moot
-The way I would be able to get around it is by... INDIRECTION!
-This class is the answer. And realtime.h needs to hold a unique_ptr to an instance of this class
-
 #pragma once
 
 // Defined before including GLEW to suppress deprecation messages on macOS
@@ -18,28 +13,30 @@ This class is the answer. And realtime.h needs to hold a unique_ptr to an instan
 #include <QTime>
 #include <QTimer>
 
+#include <glwrappers/glinitializer.h>
 #include "glwrappers/fbo.h"
 #include "glwrappers/vao.h"
 #include "glwrappers/vbo.h"
 #include "glwrappers/shader.h"
-#include "glwrappers/glinitializer.h"
 
-class GLRealtime
+class GlRealtime
 {
+    GLInitializer m_gl_initializer;
 public:
-    GlRealtime();
+    GlRealtime(size_t width, size_t height, double device_pixel_ratio);
     ~GlRealtime();                                      // Called on program exit
     void sceneChanged();
     void settingsChanged();
-    void saveViewportImage(std::string filePath);
 
     void tick(QTimerEvent* event);                      // Called once per tick of m_timer
 
-    void initializeGL();                       // Called once at the start of the program
-    void paintGL();                            // Called whenever the OpenGL context changes or by an update() request
-    void resizeGL(int width, int height);      // Called when window size changes
+    void paint();                            // Called whenever the OpenGL context changes or by an update() request
+    void resize(size_t width, size_t height);      // Called when window size changes
 
 private:
+    GlRealtime();                        // Disallow default constructor
+    GlRealtime(const GlRealtime& other); // Disallow copy constructor
+
     // void keyPressEvent(QKeyEvent *event);
     // void keyReleaseEvent(QKeyEvent *event);
     // void mousePressEvent(QMouseEvent *event);
@@ -72,6 +69,3 @@ private:
     void createShaders();
 
 };
-
-
-#endif // GL-REALTIME_H
