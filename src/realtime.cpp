@@ -62,21 +62,29 @@ void Realtime::paintGL() {
 }
 
 void Realtime::resizeGL(int w, int h) {
-    // Tells OpenGL how big the screen is
-    glViewport(0, 0, size().width() * m_devicePixelRatio, size().height() * m_devicePixelRatio);
-
-    // Students: anything requiring OpenGL calls when the program starts should be done here
     if (m_gl_realtime) m_gl_realtime->resize(size().width(), size().height());
 }
 
-void Realtime::sceneChanged() {
 
-    update(); // asks for a PaintGL() call to occur
+void Realtime::sceneChanged() {
+    // TA Solution:
+    if(settings.sceneFilePath != "" && m_gl_realtime) {
+        this->makeCurrent();
+        m_gl_realtime->loadScene(
+            settings.sceneFilePath,
+            settings.nearPlane,
+            settings.farPlane
+        );
+    }
+    update(); // Asks for a PaintGL() call to occur
 }
 
 void Realtime::settingsChanged() {
-
-    update(); // asks for a PaintGL() call to occur
+    if(m_gl_realtime) {
+        this->makeCurrent();
+        m_gl_realtime->settingsChanged();
+        update();
+    }
 }
 
 // ================== Project 6: Action!

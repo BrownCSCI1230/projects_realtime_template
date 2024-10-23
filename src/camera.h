@@ -7,7 +7,7 @@
 class Camera
 {
 public:
-    void setData(RenderData data, int w, int h);
+    void init(RenderData data, int w, int h, int near, int far);
     void finish();
 
     glm::mat4 getProjection();
@@ -25,6 +25,9 @@ public:
 private:
     glm::mat4 lookAt(glm::vec3 eye, glm::vec3 center, glm::vec3 up);
     glm::mat4 perspective(float fov, float aspect, float near, float far);
+
+    void recomputeView();
+    void recomputeProjection();
 
     float m_near;
     float m_far;

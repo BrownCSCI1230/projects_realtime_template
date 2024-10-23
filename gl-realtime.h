@@ -4,20 +4,25 @@
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
 #endif
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-
-#include <unordered_map>
-#include <QElapsedTimer>
-#include <QOpenGLWidget>
-#include <QTime>
-#include <QTimer>
 
 #include <glwrappers/glinitializer.h>
 #include "glwrappers/fbo.h"
 #include "glwrappers/vao.h"
 #include "glwrappers/vbo.h"
 #include "glwrappers/shader.h"
+
+#include "utils/scenefilereader.h"
+#include "camera.h"
+#include "settings.h"
+
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+
+#include <QElapsedTimer>
+#include <QOpenGLWidget>
+#include <QTime>
+#include <QTimer>
+#include <unordered_map>
 
 class GlRealtime
 {
@@ -33,39 +38,35 @@ public:
     void paint();                            // Called whenever the OpenGL context changes or by an update() request
     void resize(size_t width, size_t height);      // Called when window size changes
 
+    void loadScene(const std::string& filepath, int near, int far);
+
 private:
     GlRealtime();                        // Disallow default constructor
     GlRealtime(const GlRealtime& other); // Disallow copy constructor
 
-    // void keyPressEvent(QKeyEvent *event);
-    // void keyReleaseEvent(QKeyEvent *event);
-    // void mousePressEvent(QMouseEvent *event);
-    // void mouseReleaseEvent(QMouseEvent *event);
-    // void mouseMoveEvent(QMouseEvent *event);
-    // void timerEvent(QTimerEvent *event);
-
-    // Tick Related Variables
-    int m_timer;                                        // Stores timer which attempts to run ~60 times per second
-    QElapsedTimer m_elapsedTimer;                       // Stores timer which keeps track of actual time between frames
-
-    // Input Related Variables
-    bool m_mouseDown = false;                           // Stores state of left mouse button
-    glm::vec2 m_prev_mouse_pos;                         // Stores mouse position
-    std::unordered_map<Qt::Key, bool> m_keyMap;         // Stores whether keys are pressed or not
-
     // Device Correction Variables
     double m_devicePixelRatio;
+
+    RenderData m_render_data;
+    Camera m_camera;
 
     int32_t m_screen_width;
     int32_t m_screen_height;
 
-
     VBO m_quad_vbo;
     VAO m_quad_vao;
+
+    std::unordered_map<PrimitiveType, VBO> m_shapeVBOs;
+    std::unordered_map<PrimitiveType, VAO> m_shapeVAOs;
+
+    int32_t m_tesselation_param1;
+    int32_t m_tesselation_param2;
 
     Shader m_phong_shader;
 
     void createFullScreenQuad();
     void createShaders();
+    //void initVBuffers();
+    void updateShapes();
 
 };

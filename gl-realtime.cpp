@@ -1,5 +1,9 @@
 #include "gl-realtime.h"
 #include "utils/shaderloader.h"
+#include "shapes/cone.h"
+#include "shapes/cube.h"
+#include "shapes/cylinder.h"
+#include "shapes/sphere.h"
 
 #include <GL/glew.h>
 #include <iostream>
@@ -20,14 +24,31 @@ GlRealtime::GlRealtime(size_t width, size_t height, double device_pixel_ratio) :
     // Students: anything requiring OpenGL calls when the program starts should be done here
 
     createFullScreenQuad();
+    //initVBuffers();
     createShaders();
+
+    glClearColor(1, 1, 1, 0);
 }
 
 GlRealtime::~GlRealtime() {}
 
+// void initVBuffers() {
+
+// }
 
 void GlRealtime::resize(size_t width, size_t height) {
-    // TODO
+    m_screen_width = width * m_devicePixelRatio;
+    m_screen_height = height * m_devicePixelRatio;
+
+    glViewport(0, 0, m_screen_width, m_screen_height);
+    // Students: anything requiring OpenGL calls when the program starts should be done here
+    // TA Solution:
+    m_camera.resize(m_screen_width, m_screen_height);
+    //m_fbo.finish();
+    //m_fbo.initialize(m_screen_width, m_screen_height);
+
+    // Set Camera Data
+    m_phong_shader.setCameraData(m_camera);
 }
 
 void GlRealtime::createFullScreenQuad() {
@@ -62,4 +83,55 @@ void GlRealtime::paint() {
     m_phong_shader.bind();
     m_quad_vao.draw();
     m_phong_shader.unbind();
+}
+
+void GlRealtime::updateShapes() {
+    // Create shapes
+    Cube cube = Cube(m_tesselation_param1);
+    m_shapeVBOs[PrimitiveType::PRIMITIVE_CUBE].setData(cube.generateShape());
+    m_shapeVAOs[PrimitiveType::PRIMITIVE_CUBE].setData(m_shapeVBOs[PrimitiveType::PRIMITIVE_CUBE], VAOAttrib::POS | VAOAttrib::NORM | VAOAttrib::UV);
+
+    Cone cone = Cone(m_tesselation_param1, m_tesselation_param2);
+    m_shapeVBOs[PrimitiveType::PRIMITIVE_CONE].setData(cone.generateShape());
+    m_shapeVAOs[PrimitiveType::PRIMITIVE_CONE].setData(m_shapeVBOs[PrimitiveType::PRIMITIVE_CONE], VAOAttrib::POS | VAOAttrib::NORM | VAOAttrib::UV);
+
+    Cylinder cylinder = Cylinder(m_tesselation_param1, m_tesselation_param2);
+    m_shapeVBOs[PrimitiveType::PRIMITIVE_CYLINDER].setData(cylinder.generateShape());
+    m_shapeVAOs[PrimitiveType::PRIMITIVE_CYLINDER].setData(m_shapeVBOs[PrimitiveType::PRIMITIVE_CYLINDER], VAOAttrib::POS | VAOAttrib::NORM | VAOAttrib::UV);
+
+    Sphere sphere = Sphere(m_tesselation_param1, m_tesselation_param2);
+    m_shapeVBOs[PrimitiveType::PRIMITIVE_SPHERE].setData(sphere.generateShape());
+    m_shapeVAOs[PrimitiveType::PRIMITIVE_SPHERE].setData(m_shapeVBOs[PrimitiveType::PRIMITIVE_SPHERE], VAOAttrib::POS | VAOAttrib::NORM | VAOAttrib::UV);
+
+}
+
+void GlRealtime::loadScene(const std::string& filepath, int near, int far) {
+    SceneParser::parse(filepath, m_render_data); // Parse scene data
+    m_camera.init(
+        m_render_data,
+        m_screen_width,
+        m_screen_height,
+        near,
+        far
+    ); // Initialize camera
+    //updateShapes();
+    //setStaticSceneUniforms();
+}
+
+void GlRealtime::settingsChanged() {
+    if (settings.shapeParameter1 != m_tesselation_param1 ||
+        settings.shapeParameter2 != m_tesselation_param2
+    ){
+        m_tesselation_param1 = settings.shapeParameter1;
+        m_tesselation_param2 = settings.shapeParameter2;
+        updateShapes();
+    }
+    if (settings.nearPlane != m_camera.getNear() ||
+        settings.farPlane != m_camera.getFar()
+    ){
+        m_camera.setClipping(settings.nearPlane, settings.farPlane);
+
+        // Set Camera Data
+        m_phong_shader.setCameraData(m_camera);
+    }
 }
