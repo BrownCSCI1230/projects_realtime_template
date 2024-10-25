@@ -26,7 +26,7 @@ GLuint Shader::initialize(GLuint handle) {
 void Shader::setCameraData(Camera &camera){
     SET_UNIFORM("view", camera.getView());
     SET_UNIFORM("projection", camera.getProjection());
-    SET_UNIFORM("worldSpace_camPos", camera.getWorldSpacePos());
+    //SET_UNIFORM("worldSpace_camPos", camera.getWorldSpacePos());
     glErrorCheck();
 }
 

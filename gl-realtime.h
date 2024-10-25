@@ -66,7 +66,7 @@ private:
 
     void createFullScreenQuad();
     void createShaders();
-    //void initVBuffers();
     void updateShapes();
+    void setStaticSceneUniforms();
 
 };
