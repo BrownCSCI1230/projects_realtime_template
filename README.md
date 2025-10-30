@@ -1,3 +1,3 @@
-# Projects 5 & 6: Lights, Camera & Action!
+# Project 5: Realtime
 
-All project handouts can be found [here](https://cs1230.graphics/projects).
+The project handout can be found [here](https://cs1230.graphics/projects/realtime/1).
