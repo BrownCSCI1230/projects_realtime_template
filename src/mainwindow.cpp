@@ -30,9 +30,12 @@ void MainWindow::initialize() {
     QLabel *camera_label = new QLabel(); // Camera label
     camera_label->setText("Camera");
     camera_label->setFont(font);
-    QLabel *filters_label = new QLabel(); // Filters label
-    filters_label->setText("Filters");
-    filters_label->setFont(font);
+
+    // From old Project 6
+    // QLabel *filters_label = new QLabel(); // Filters label
+    // filters_label->setText("Filters");
+    // filters_label->setFont(font);
+
     QLabel *ec_label = new QLabel(); // Extra Credit label
     ec_label->setText("Extra Credit");
     ec_label->setFont(font);
@@ -46,23 +49,22 @@ void MainWindow::initialize() {
     far_label->setText("Far Plane:");
 
 
-
-    // Create checkbox for per-pixel filter
-    filter1 = new QCheckBox();
-    filter1->setText(QStringLiteral("Per-Pixel Filter"));
-    filter1->setChecked(false);
-
-    // Create checkbox for kernel-based filter
-    filter2 = new QCheckBox();
-    filter2->setText(QStringLiteral("Kernel-Based Filter"));
-    filter2->setChecked(false);
+    // From old Project 6
+    // // Create checkbox for per-pixel filter
+    // filter1 = new QCheckBox();
+    // filter1->setText(QStringLiteral("Per-Pixel Filter"));
+    // filter1->setChecked(false);
+    // // Create checkbox for kernel-based filter
+    // filter2 = new QCheckBox();
+    // filter2->setText(QStringLiteral("Kernel-Based Filter"));
+    // filter2->setChecked(false);
 
     // Create file uploader for scene file
     uploadFile = new QPushButton();
     uploadFile->setText(QStringLiteral("Upload Scene File"));
     
     saveImage = new QPushButton();
-    saveImage->setText(QStringLiteral("Save image"));
+    saveImage->setText(QStringLiteral("Save Image"));
 
     // Creates the boxes containing the parameter sliders and number boxes
     QGroupBox *p1Layout = new QGroupBox(); // horizonal slider 1 alignment
@@ -173,9 +175,12 @@ void MainWindow::initialize() {
     vLayout->addWidget(nearLayout);
     vLayout->addWidget(far_label);
     vLayout->addWidget(farLayout);
-    vLayout->addWidget(filters_label);
-    vLayout->addWidget(filter1);
-    vLayout->addWidget(filter2);
+
+    // From old Project 6
+    // vLayout->addWidget(filters_label);
+    // vLayout->addWidget(filter1);
+    // vLayout->addWidget(filter2);
+
     // Extra Credit:
     vLayout->addWidget(ec_label);
     vLayout->addWidget(ec1);
@@ -200,8 +205,9 @@ void MainWindow::finish() {
 }
 
 void MainWindow::connectUIElements() {
-    connectPerPixelFilter();
-    connectKernelBasedFilter();
+    // From old Project 6
+    //connectPerPixelFilter();
+    //connectKernelBasedFilter();
     connectUploadFile();
     connectSaveImage();
     connectParam1();
@@ -211,13 +217,14 @@ void MainWindow::connectUIElements() {
     connectExtraCredit();
 }
 
-void MainWindow::connectPerPixelFilter() {
-    connect(filter1, &QCheckBox::clicked, this, &MainWindow::onPerPixelFilter);
-}
 
-void MainWindow::connectKernelBasedFilter() {
-    connect(filter2, &QCheckBox::clicked, this, &MainWindow::onKernelBasedFilter);
-}
+// From old Project 6
+// void MainWindow::connectPerPixelFilter() {
+//     connect(filter1, &QCheckBox::clicked, this, &MainWindow::onPerPixelFilter);
+// }
+// void MainWindow::connectKernelBasedFilter() {
+//     connect(filter2, &QCheckBox::clicked, this, &MainWindow::onKernelBasedFilter);
+// }
 
 void MainWindow::connectUploadFile() {
     connect(uploadFile, &QPushButton::clicked, this, &MainWindow::onUploadFile);
@@ -258,15 +265,15 @@ void MainWindow::connectExtraCredit() {
     connect(ec4, &QCheckBox::clicked, this, &MainWindow::onExtraCredit4);
 }
 
-void MainWindow::onPerPixelFilter() {
-    settings.perPixelFilter = !settings.perPixelFilter;
-    realtime->settingsChanged();
-}
-
-void MainWindow::onKernelBasedFilter() {
-    settings.kernelBasedFilter = !settings.kernelBasedFilter;
-    realtime->settingsChanged();
-}
+// From old Project 6
+// void MainWindow::onPerPixelFilter() {
+//     settings.perPixelFilter = !settings.perPixelFilter;
+//     realtime->settingsChanged();
+// }
+// void MainWindow::onKernelBasedFilter() {
+//     settings.kernelBasedFilter = !settings.kernelBasedFilter;
+//     realtime->settingsChanged();
+// }
 
 void MainWindow::onUploadFile() {
     // Get abs path of scene file
@@ -275,7 +282,7 @@ void MainWindow::onUploadFile() {
                                                               .append(QDir::separator())
                                                               .append("scenefiles")
                                                               .append(QDir::separator())
-                                                              .append("lights-camera")
+                                                              .append("realtime")
                                                               .append(QDir::separator())
                                                               .append("required"), tr("Scene Files (*.json)"));
     if (configFilePath.isNull()) {
@@ -302,7 +309,7 @@ void MainWindow::onSaveImage() {
                                                         .append(QDir::separator())
                                                         .append("student_outputs")
                                                         .append(QDir::separator())
-                                                        .append("lights-camera")
+                                                        .append("realtime")
                                                         .append(QDir::separator())
                                                         .append("required")
                                                         .append(QDir::separator())

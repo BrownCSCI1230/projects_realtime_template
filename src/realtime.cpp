@@ -6,7 +6,7 @@
 #include <iostream>
 #include "settings.h"
 
-// ================== Project 5: Lights, Camera
+// ================== Rendering the Scene!
 
 Realtime::Realtime(QWidget *parent)
     : QOpenGLWidget(parent)
@@ -80,7 +80,7 @@ void Realtime::settingsChanged() {
     update(); // asks for a PaintGL() call to occur
 }
 
-// ================== Project 6: Action!
+// ================== Camera Movement!
 
 void Realtime::keyPressEvent(QKeyEvent *event) {
     m_keyMap[Qt::Key(event->key())] = true;

@@ -23,16 +23,22 @@ private:
     void connectParam2();
     void connectNear();
     void connectFar();
-    void connectPerPixelFilter();
-    void connectKernelBasedFilter();
+
+    // From old Project 6
+    // void connectPerPixelFilter();
+    // void connectKernelBasedFilter();
+
     void connectUploadFile();
     void connectSaveImage();
     void connectExtraCredit();
 
     Realtime *realtime;
     AspectRatioWidget *aspectRatioWidget;
-    QCheckBox *filter1;
-    QCheckBox *filter2;
+
+    // From old Project 6
+    // QCheckBox *filter1;
+    // QCheckBox *filter2;
+
     QPushButton *uploadFile;
     QPushButton *saveImage;
     QSlider *p1Slider;
@@ -51,8 +57,10 @@ private:
     QCheckBox *ec4;
 
 private slots:
-    void onPerPixelFilter();
-    void onKernelBasedFilter();
+    // From old Project 6
+    // void onPerPixelFilter();
+    // void onKernelBasedFilter();
+
     void onUploadFile();
     void onSaveImage();
     void onValChangeP1(int newValue);
