@@ -132,8 +132,10 @@ void Realtime::saveViewportImage(std::string filePath) {
     // Make sure we have the right context and everything has been drawn
     makeCurrent();
 
-    int fixedWidth = 1024;
-    int fixedHeight = 768;
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    int fixedWidth = viewport[2];
+    int fixedHeight = viewport[3];
 
     // Create Frame Buffer
     GLuint fbo;
